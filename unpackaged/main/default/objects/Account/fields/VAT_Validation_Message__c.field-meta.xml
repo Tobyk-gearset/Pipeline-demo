@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VAT_Validation_Message__c</fullName>
+    <description>The message returned by the external VAT validation service, providing detail on why a number passed or failed validation.</description>
+    <externalId>false</externalId>
+    <label>VAT Validation Message</label>
+    <length>255</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
