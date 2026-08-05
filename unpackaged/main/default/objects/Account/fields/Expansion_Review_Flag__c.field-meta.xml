@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Expansion_Review_Flag__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Indicates the account has been flagged for expansion review due to employee count growth exceeding 1,000.</description>
+    <label>Expansion Review Flag</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Checkbox</type>
+</CustomField>
