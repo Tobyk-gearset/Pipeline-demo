@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>60.0</apiVersion>
-    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <apiVersion>55.0</apiVersion>
     <actionCalls>
         <name>Call_VAT_Validation_Service</name>
         <label>Call VAT Validation Service</label>
@@ -237,7 +236,6 @@
         </rules>
     </decisions>
     <description>Record-triggered Flow on Account that fires after save when VAT_Number__c is populated. Validates the VAT number format locally and calls an external validation service via Apex. Updates the validation status fields and creates a Task for the finance team when validation fails. Non-blocking to sales reps.</description>
-    <environments>Default</environments>
     <formulas>
         <name>Current_DateTime</name>
         <dataType>DateTime</dataType>
