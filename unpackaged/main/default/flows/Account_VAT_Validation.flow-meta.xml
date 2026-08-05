@@ -1,51 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>60.0</apiVersion>
-    <apexPluginCalls>
-        <name>Call_VAT_Validation_Service</name>
-        <label>Call VAT Validation Service</label>
-        <locationX>270</locationX>
-        <locationY>647</locationY>
-        <apexClass>VATValidationService</apexClass>
-        <connector>
-            <targetReference>Check_Validation_Result</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Handle_Apex_Callout_Fault</targetReference>
-        </faultConnector>
-        <inputParameters>
-            <name>vatNumber</name>
-            <value>
-                <elementReference>$Record.VAT_Number__c</elementReference>
-            </value>
-        </inputParameters>
-        <outputParameters>
-            <assignToReference>Apex_Result_Status</assignToReference>
-            <name>status</name>
-        </outputParameters>
-        <outputParameters>
-            <assignToReference>Apex_Result_Message</assignToReference>
-            <name>message</name>
-        </outputParameters>
-    </apexPluginCalls>
-    <assignments>
-        <name>Handle_Apex_Callout_Fault</name>
-        <label>Handle Apex Callout Fault</label>
-        <locationX>534</locationX>
-        <locationY>755</locationY>
-        <assignmentItems>
-            <assignToReference>FaultMessage</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </assignmentItems>
-    </assignments>
     <assignments>
         <name>Handle_Create_Task_Format_Fault</name>
         <label>Handle Create Task Format Fault</label>
         <locationX>798</locationX>
-        <locationY>1187</locationY>
+        <locationY>863</locationY>
         <assignmentItems>
             <assignToReference>FaultMessage</assignToReference>
             <operator>Assign</operator>
@@ -58,20 +18,7 @@
         <name>Handle_Create_Task_Invalid_Fault</name>
         <label>Handle Create Task Invalid Fault</label>
         <locationX>534</locationX>
-        <locationY>1187</locationY>
-        <assignmentItems>
-            <assignToReference>FaultMessage</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </assignmentItems>
-    </assignments>
-    <assignments>
-        <name>Handle_Update_Error_Fault</name>
-        <label>Handle Update Error Fault</label>
-        <locationX>534</locationX>
-        <locationY>971</locationY>
+        <locationY>863</locationY>
         <assignmentItems>
             <assignToReference>FaultMessage</assignToReference>
             <operator>Assign</operator>
@@ -84,7 +31,7 @@
         <name>Handle_Update_Format_Fault</name>
         <label>Handle Update Format Invalid Fault</label>
         <locationX>798</locationX>
-        <locationY>971</locationY>
+        <locationY>647</locationY>
         <assignmentItems>
             <assignToReference>FaultMessage</assignToReference>
             <operator>Assign</operator>
@@ -97,7 +44,7 @@
         <name>Handle_Update_Invalid_Fault</name>
         <label>Handle Update Invalid Fault</label>
         <locationX>270</locationX>
-        <locationY>971</locationY>
+        <locationY>647</locationY>
         <assignmentItems>
             <assignToReference>FaultMessage</assignToReference>
             <operator>Assign</operator>
@@ -110,7 +57,7 @@
         <name>Handle_Update_Pending_Fault</name>
         <label>Handle Update Pending Fault</label>
         <locationX>6</locationX>
-        <locationY>971</locationY>
+        <locationY>647</locationY>
         <assignmentItems>
             <assignToReference>FaultMessage</assignToReference>
             <operator>Assign</operator>
@@ -123,7 +70,7 @@
         <name>Handle_Update_Valid_Fault</name>
         <label>Handle Update Valid Fault</label>
         <locationX>6</locationX>
-        <locationY>755</locationY>
+        <locationY>539</locationY>
         <assignmentItems>
             <assignToReference>FaultMessage</assignToReference>
             <operator>Assign</operator>
@@ -136,7 +83,7 @@
         <name>Check_Format</name>
         <label>Check VAT Number Format</label>
         <locationX>402</locationX>
-        <locationY>539</locationY>
+        <locationY>431</locationY>
         <defaultConnector>
             <targetReference>Update_Account_Format_Invalid</targetReference>
         </defaultConnector>
@@ -152,64 +99,9 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Call_VAT_Validation_Service</targetReference>
+                <targetReference>Check_Validation_Result</targetReference>
             </connector>
             <label>Format Valid</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Check_Validation_Result</name>
-        <label>Check Validation Result</label>
-        <locationX>270</locationX>
-        <locationY>755</locationY>
-        <defaultConnector>
-            <targetReference>Update_Account_Pending</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Result Pending</defaultConnectorLabel>
-        <rules>
-            <name>Result_Valid</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Apex_Result_Status</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Valid</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Update_Account_Valid</targetReference>
-            </connector>
-            <label>Result Valid</label>
-        </rules>
-        <rules>
-            <name>Result_Invalid</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Apex_Result_Status</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Invalid</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Update_Account_Invalid</targetReference>
-            </connector>
-            <label>Result Invalid</label>
-        </rules>
-        <rules>
-            <name>Result_Error</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Apex_Result_Status</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Error</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Update_Account_Error</targetReference>
-            </connector>
-            <label>Result Error</label>
         </rules>
     </decisions>
     <decisions>
@@ -234,7 +126,47 @@
             <label>VAT Number Changed</label>
         </rules>
     </decisions>
-    <description>Record-triggered Flow on Account that fires after save when VAT_Number__c is populated. Validates the VAT number format locally and calls an external validation service via Apex. Updates the validation status fields and creates a Task for the finance team when validation fails. Non-blocking to sales reps.</description>
+    <decisions>
+        <name>Check_Validation_Result</name>
+        <label>Check Validation Result</label>
+        <locationX>270</locationX>
+        <locationY>539</locationY>
+        <defaultConnector>
+            <targetReference>Update_Account_Pending</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Result Pending or Unknown</defaultConnectorLabel>
+        <rules>
+            <name>Result_Valid</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Validation_Result_Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Valid</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Account_Valid</targetReference>
+            </connector>
+            <label>Result Valid</label>
+        </rules>
+        <rules>
+            <name>Result_Invalid</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Validation_Result_Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Invalid</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Account_Invalid</targetReference>
+            </connector>
+            <label>Result Invalid</label>
+        </rules>
+    </decisions>
+    <description>Record-triggered Flow on Account that fires after save when VAT_Number__c is populated and changed. Validates the VAT number format locally and checks the result from the external validation service. Updates the validation status fields and creates a Task for the finance team when validation fails. Non-blocking to sales reps. To enable external validation, add an Apex Action element calling VATValidationService before the Check Validation Result decision.</description>
     <formulas>
         <name>Current_DateTime</name>
         <dataType>DateTime</dataType>
@@ -249,6 +181,11 @@
         <name>Task_Subject</name>
         <dataType>String</dataType>
         <expression>"VAT Validation Failed - " &amp; {!$Record.Name}</expression>
+    </formulas>
+    <formulas>
+        <name>Validation_Result_Status</name>
+        <dataType>String</dataType>
+        <expression>"Pending"</expression>
     </formulas>
     <interviewLabel>Account VAT Validation {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Account VAT Validation</label>
@@ -275,7 +212,7 @@
         <name>Create_Finance_Task_Format</name>
         <label>Create Finance Task - Format Invalid</label>
         <locationX>666</locationX>
-        <locationY>971</locationY>
+        <locationY>755</locationY>
         <faultConnector>
             <targetReference>Handle_Create_Task_Format_Fault</targetReference>
         </faultConnector>
@@ -321,14 +258,14 @@
         <name>Create_Finance_Task_Invalid</name>
         <label>Create Finance Task - Invalid VAT</label>
         <locationX>270</locationX>
-        <locationY>971</locationY>
+        <locationY>755</locationY>
         <faultConnector>
             <targetReference>Handle_Create_Task_Invalid_Fault</targetReference>
         </faultConnector>
         <inputAssignments>
             <field>Description</field>
             <value>
-                <elementReference>Apex_Result_Message</elementReference>
+                <stringValue>The VAT number failed external validation. Please verify and correct the VAT number on this account.</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -364,46 +301,10 @@
         <object>Task</object>
     </recordCreates>
     <recordUpdates>
-        <name>Update_Account_Error</name>
-        <label>Update Account - Error</label>
-        <locationX>402</locationX>
-        <locationY>863</locationY>
-        <faultConnector>
-            <targetReference>Handle_Update_Error_Fault</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>VAT_Validation_Date__c</field>
-            <value>
-                <elementReference>Current_DateTime</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>VAT_Validation_Message__c</field>
-            <value>
-                <elementReference>Apex_Result_Message</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>VAT_Validation_Status__c</field>
-            <value>
-                <stringValue>Error</stringValue>
-            </value>
-        </inputAssignments>
-        <object>Account</object>
-    </recordUpdates>
-    <recordUpdates>
         <name>Update_Account_Format_Invalid</name>
         <label>Update Account - Format Invalid</label>
         <locationX>666</locationX>
-        <locationY>647</locationY>
+        <locationY>539</locationY>
         <connector>
             <targetReference>Create_Finance_Task_Format</targetReference>
         </connector>
@@ -442,7 +343,7 @@
         <name>Update_Account_Invalid</name>
         <label>Update Account - Invalid</label>
         <locationX>270</locationX>
-        <locationY>863</locationY>
+        <locationY>647</locationY>
         <connector>
             <targetReference>Create_Finance_Task_Invalid</targetReference>
         </connector>
@@ -466,7 +367,7 @@
         <inputAssignments>
             <field>VAT_Validation_Message__c</field>
             <value>
-                <elementReference>Apex_Result_Message</elementReference>
+                <stringValue>VAT number failed external validation.</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -481,7 +382,7 @@
         <name>Update_Account_Pending</name>
         <label>Update Account - Pending</label>
         <locationX>138</locationX>
-        <locationY>863</locationY>
+        <locationY>647</locationY>
         <faultConnector>
             <targetReference>Handle_Update_Pending_Fault</targetReference>
         </faultConnector>
@@ -502,7 +403,7 @@
         <inputAssignments>
             <field>VAT_Validation_Message__c</field>
             <value>
-                <elementReference>Apex_Result_Message</elementReference>
+                <stringValue>VAT validation service not yet configured.</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -517,7 +418,7 @@
         <name>Update_Account_Valid</name>
         <label>Update Account - Valid</label>
         <locationX>138</locationX>
-        <locationY>755</locationY>
+        <locationY>539</locationY>
         <faultConnector>
             <targetReference>Handle_Update_Valid_Fault</targetReference>
         </faultConnector>
@@ -538,7 +439,7 @@
         <inputAssignments>
             <field>VAT_Validation_Message__c</field>
             <value>
-                <elementReference>Apex_Result_Message</elementReference>
+                <stringValue>VAT number is valid.</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -569,20 +470,6 @@
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
-    <variables>
-        <name>Apex_Result_Message</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>Apex_Result_Status</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
     <variables>
         <name>FaultMessage</name>
         <dataType>String</dataType>
