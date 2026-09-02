@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Social_Security_Number__c</fullName>
+    <complianceGroup>PII</complianceGroup>
+    <description>The employee's Social Security Number, stored encrypted and masked to show only the last four digits.</description>
+    <externalId>false</externalId>
+    <label>Social Security Number</label>
+    <length>11</length>
+    <maskChar>asterisk</maskChar>
+    <maskType>lastFour</maskType>
+    <required>false</required>
+    <securityClassification>Restricted</securityClassification>
+    <type>EncryptedText</type>
+</CustomField>
